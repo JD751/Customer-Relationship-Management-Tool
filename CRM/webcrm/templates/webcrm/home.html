@@ -1,5 +1,31 @@
 {% extends 'webcrm/base.html' %}
 
 {% block content %}
-<h2>Hello world!</h2>
+<div class="col-md-6 offset-md-3">
+
+{% if user.is_authenticated %}
+<h2>Hello World</h2>
+{% else %}
+
+
+<h2>Login</h2>
+<br/>
+<form method= 'POST' action= {% url 'home' %}>
+{% csrf_token %}
+</form>
+<form>
+    <div class="mb-3">
+        <label for="usernameInput" class="form-label">Username</label>
+        <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" required>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-secondary">Login</button>
+  </form>
+</div>
+{% endif %}
 {% endblock  %}
