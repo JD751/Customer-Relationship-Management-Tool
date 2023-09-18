@@ -20,7 +20,7 @@ def home(request):
 			messages.success(request, "There Was An Error Logging In, Please Try Again...")
 			return redirect('home')
 	else:
-		return redirect(request, 'webcrm/home.html',{} )
+		return render(request, 'webcrm/home.html',{} )
 
 def login_user(request):
     pass
