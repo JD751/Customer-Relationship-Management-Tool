@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout,login
 from django.contrib import messages
 from .forms import UserCreationForm, LoginForm
-from django.contrib.auth.models import auth
+
 
 
 # Create your views here.
@@ -43,28 +43,27 @@ def register(request):
 def user_login(request):
 
     form = LoginForm()
+    error_message = None
 
     if request.method == 'POST':
-
-        form = LoginForm(request, data=request.POST)
+        form = LoginForm(request.POST)
 
         if form.is_valid():
-
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
 
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
-
-                auth.login(request, user)
-
+                login(request, user)
                 return redirect("dashboard")
+            else:
+                error_message = "Invalid username or password."
 
+    context = {'form': form, 'error_message': error_message}
+    print(error_message)
+    return render(request, 'user_login.html', context=context)
 
-    context = {'form': form}
-
-    return render(request, 'my-login.html', context=context)
     
 
 def dashboard(request):
