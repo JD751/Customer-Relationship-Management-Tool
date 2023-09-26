@@ -1,0 +1,13 @@
+<h1> Dashboard </h1>
+
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2>Dashboard</h2>
+        
+        <p> Hi {{user}} ! </p>
+        
+        <p>Logout <a href="{% url 'logout' %}">Logout here</a></p>
+    </div>
+{% endblock %}

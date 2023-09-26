@@ -34,7 +34,7 @@ def register(request):
         form=UserCreationForm(request.POST)
         if form.is_valid:
             form.save()
-            return redirect('dashboard')
+            return redirect('login')
     
     context={'form':form}
     return render(request, 'register.html', context=context)
@@ -51,6 +51,7 @@ def user_login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            print(form.cleaned_data)
 
             user = authenticate(request, username=username, password=password)
 
@@ -62,13 +63,15 @@ def user_login(request):
 
     context = {'form': form, 'error_message': error_message}
     print(error_message)
+    
     return render(request, 'user_login.html', context=context)
 
     
 
 def dashboard(request):
-    pass
+    return render(request, 'dashboard.html')
 
 def user_logout(request):
-    pass
+    logout(request)
+    return redirect('home')
 
